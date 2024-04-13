@@ -91,6 +91,7 @@ yarn build
    * Класс, представляющий информацию о заказе.
    * Содержит данные о заказе: id, id пользователя, id продукта, количество единиц товара, общая сумма, выбранный способ оплаты и адрес доставки - все, что пригодится магазину для обработки и идентификации заказа. 
 
+###  Описание типов данных
 
 |            *Product*                   |
 |--------------------------------------|
@@ -122,20 +123,20 @@ yarn build
 | + addToCart(): void                  |
 
 
-+--------------------------------------+
-|            CartModal                 |
-+--------------------------------------+
+
+|            *CartModal*                 |
+| --------------------------------------| 
 | - cartItems: array                   |
 | - totalAmount: decimal               |
 | + open(): void                       |
 | + close(): void                      |
 | + removeFromCart(): void             |
 | + updateTotalAmount(): void          |
-+--------------------------------------+
 
-+--------------------------------------+
-|    PaymentAndShippingModal           |  
-+--------------------------------------+
+
+
+|    *PaymentAndShippingModal*           |  
+| --------------------------------------| 
 | - selectedPaymentMethod: string      |  
 | - shippingAddress: string            |  
 | + open(): void                       |
@@ -144,11 +145,11 @@ yarn build
 | + enterShippingAddress(address: string):void |  
 | + validatePaymentAndShipping(): boolean |
 | + goToNextStep(): void               |
-+--------------------------------------+
 
-+--------------------------------------+
-|           ContactDetailsModal          |
-+--------------------------------------+
+
+
+|           *ContactDetailsModal*          |
+| --------------------------------------| 
 | - email: string                      |
 | - phone: string                      |
 | + open(): void                       |
@@ -156,26 +157,24 @@ yarn build
 | + validateEmail(email: string): boolean |
 | + validatePhone(phone: string): boolean |
 | + goToNextStep(): void                |
-+--------------------------------------+
 
-+--------------------------------------+
-|           OrderConfirmationModal     |
-+--------------------------------------+
+
+
+|          * OrderConfirmationModal*     |
+| --------------------------------------| 
 | + showOrderConfirmation(totalAmount: number): void |
 | + resetCart(): void                  |
-+--------------------------------------+
 
-+--------------------------------------+
-|             API                      |
-+--------------------------------------+
+
+|             *API*                      |
+| --------------------------------------| 
 | + getProductList(): void              |
 | + getProductItem(id: string): void   |
 | + orderProduct(order: IOrder): void  |
-+--------------------------------------+
 
-+--------------------------------------+
-|           Order                      |
-+--------------------------------------+
+
+|           *Order*                      |
+| --------------------------------------| 
 | - id: string                         |
 | - userId: string                     |
 | - productId: string                  |
@@ -183,4 +182,3 @@ yarn build
 | - totalAmount: decimal               |
 | - selectedPaymentMethod: string      |  
 | - shippingAddress: string            | 
-+--------------------------------------+ 
