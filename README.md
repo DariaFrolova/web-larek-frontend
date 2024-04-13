@@ -160,7 +160,7 @@ yarn build
 
 
 
-|          * OrderConfirmationModal*     |
+|          *OrderConfirmationModal*     |
 | --------------------------------------| 
 | + showOrderConfirmation(totalAmount: number): void |
 | + resetCart(): void                  |
