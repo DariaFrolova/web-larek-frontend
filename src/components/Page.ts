@@ -1,3 +1,6 @@
+// Класс Page отвечает за отображение данных на странице товара
+// Здесь у нас установлен счетчик корзины, каталога товаров и блокировки страницы при открытии модального окна
+
 import { ensureElement } from '../utils/utils';
 import { Component } from './base/Component';
 import { IEvents, EventEmitter } from './base/events';
