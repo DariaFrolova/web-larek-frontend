@@ -55,3 +55,4 @@ export interface IOrderPersonalData { // Этап ввода персональ�
 export interface IOrderSuccess extends IOrder { // Этап "ваш заказ оформлен"
     totalAmount: number;
 }
+
