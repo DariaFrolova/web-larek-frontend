@@ -3,10 +3,13 @@
 
 import './scss/styles.scss';
 
-import { API_URL, CDN_URL, settings } from './utils/constants';
+import { CDN_URL, API_URL } from './utils/constants';
+import { WebLarekApi } from './components/WebLarekApi';
 import { EventEmitter } from './components/base/events';
-// import { Page } from './components/Page';
-// import { cloneTemplate, createElement, ensureElement } from './utils/utils';
-// import { Model } from './components/base/Model';
-// import { Component } from './components/base/Component';
+// import { AppState } from './components/AppData';
+// import { Model } from './components/base/model';
+
+const api = new WebLarekApi (CDN_URL, API_URL);
+
+   
 

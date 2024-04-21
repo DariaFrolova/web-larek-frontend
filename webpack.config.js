@@ -74,7 +74,12 @@ const config = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", "..."],
-  },
+    fallback: {
+      path: require.resolve("path-browserify"),
+      os: false, // или require.resolve("os-browserify/browser")
+      crypto: false // или require.resolve("crypto-browserify")
+    }
+  },  
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin({
