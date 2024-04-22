@@ -31,17 +31,17 @@ export class Card extends Component<ICard> {
 
 	constructor(blockName: string, container: HTMLElement, events: ICardActions) {
 		super(container);
-		this._title = ensureElement<HTMLElement>(`.${blockName}__title, container`);
+		this._title = ensureElement<HTMLElement>(`.${blockName}__title`, container);
 		this._image = ensureElement<HTMLImageElement>(
-			`.${blockName}__image, container`
+			`.${blockName}__image`, container
 		);
 		this._description = container.querySelector(`.${blockName}__text`);
 		this._button = container.querySelector(`.${blockName}__button`);
 		this._price = ensureElement<HTMLImageElement>(
-			`.${blockName}__price, container`
+			`.${blockName}__price`, container
 		);
 		this._category = ensureElement<HTMLImageElement>(
-			`.${blockName}__category, container`
+			`.${blockName}__category`, container
 		);
 
 		if (this._button) {
