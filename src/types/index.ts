@@ -93,13 +93,14 @@ export interface IOrderPersonalData {
 	error?: string;
 }
 
-//Ошибки в формах
-// Интерфейс для объекта ошибок в форме
+
 export interface FormErrors {
-	email: string;
-	phone: string;
-	// можно добавить другие поля, если нужно
+    email?: string;
+    phone?: string;
+    selectPaymentMethod?: string;
+    shippingAddress?: string;
 }
+
 
 // Тип для обобщенной структуры ошибок в форме
 type FormErrorsType = Partial<Record<keyof FormErrors, string>>;
@@ -181,4 +182,13 @@ type FormErrorsType = Partial<Record<keyof FormErrors, string>>;
 // export interface IOrderSuccess extends IOrder {
 // 	// Этап "ваш заказ оформлен"
 // 	totalAmount: number;
+// }
+
+
+//Ошибки в формах
+// Интерфейс для объекта ошибок в форме
+// export  interface FormErrors {
+// 	email: string;
+// 	phone: string;
+// 	// можно добавить другие поля, если нужно
 // }
