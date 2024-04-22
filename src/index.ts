@@ -13,6 +13,10 @@ import { IProductItem, IOrder, PaymentMethod, IOrderAdress } from './types';
 
 import { Page } from './components/Page';
 import { Card } from './components/Card';
+import { Basket } from './components/common/Basket';
+import { ProductBasket } from './components/common/ProductBasket';
+import { Modal } from './components/common/Modal';
+import { Success } from './components/common/Success';
 
 const events = new EventEmitter();
 const api = new WebLarekApi (CDN_URL, API_URL);
@@ -37,15 +41,15 @@ const modalAction = document.querySelector('.modal__actions');
 const doOrderButton = modalAction.querySelector('.button');
 
 // // Переиспользуемые части интерфейса
-// const basketComponent = new Basket(cloneTemplate(basketTemplate), events);
+const basketComponent = new Basket(cloneTemplate(basketTemplate), events);
 // const orderComponent = new Order(cloneTemplate(orderTemplate), events);
 // const contactComponent = new Contacts(cloneTemplate(contactTemplate), events);
 
 const page = new Page(document.body, events);
-// const modal = new Modal(ensureElement<HTMLElement>('#modal-container'), events);
+const modal = new Modal(ensureElement<HTMLElement>('#modal-container'), events);
 
 // // Переиспользуемые компоненты
-// const basket = new Basket(cloneTemplate(basketTemplate), events); // Ошибка: переменная уже объявлена
+const basket = new Basket(cloneTemplate(basketTemplate), events); // Ошибка: переменная уже объявлена
 // const order = new OrderAddress(cloneTemplate(orderTemplate), events); // Исправлено на orderComponent
 // const contacts = new ContactsOrder(cloneTemplate(contactsTemplate), events); // Исправлено на contactComponent
 
@@ -73,3 +77,118 @@ api.getProductList()
        .catch(err => {	
 	console.error(err);
 })
+
+
+// //выбираем товар
+// events.on('card:select', (item: CatalogProduct) => {
+//     appData.setPreview(item);
+// });
+
+// //Открытие карточки превью
+// events.on('preview:changed', (item: CatalogProduct) => {
+//   if(item) {
+//    const card = new Card('card',cloneTemplate(cardPreviewTemplate), {
+//    onClick: () => {
+//        if (appData.checkBasket(item)) {
+//            events.emit('webproduct:delete', item)
+//        } else {
+//            events.emit('webproduct:added', item)
+//        }
+//    }            
+// });
+//        modal.render({
+//                content: card.render({
+//                title: item.title,
+//                image: item.image,
+//                category: item.category,
+//                description: item.description,
+//                price: item.price,
+//                button: appData.checkBasket(item) ? 'Убрать' : 'Купить',    
+                  
+//                })
+//            })
+//        } else {
+//            modal.close();
+//        }
+
+//    });
+
+// Выбор товара
+events.on('card:select', (item: CatalogProduct) => {
+    appData.setPreview(item);
+});
+
+// Обработка изменения превью
+events.on('preview:changed', (item: CatalogProduct) => {
+    if (item) {
+        const card = createCard(item);
+        showModalWithCard(card, item);
+    } else {
+        modal.close();
+    }
+});
+
+function createCard(item: CatalogProduct): Card {
+    return new Card('card', cloneTemplate(cardPreviewTemplate), {
+        onClick: () => {
+            if (appData.checkBasket(item)) {
+                events.emit('webproduct:delete', item);
+            } else {
+                events.emit('webproduct:added', item);
+            }
+        }
+    });
+}
+
+function showModalWithCard(card: Card, item: CatalogProduct): void {
+    modal.render({
+        content: card.render({
+            title: item.title,
+            image: item.image,
+            category: item.category,
+            description: item.description,
+            price: item.price,
+            button: appData.checkBasket(item) ? 'Убрать' : 'Купить'
+        })
+    });
+}
+
+// Обработка добавления и удаления товара из корзины
+events.on('webproduct:added', (item: CatalogProduct) => {
+    handleProductAction(item, () => appData.addInBasket(item.id));
+});
+
+events.on('webproduct:delete', (item: CatalogProduct) => {
+    handleProductAction(item, () => appData.deleteFromBasket(item.id));
+});
+
+function handleProductAction(item: CatalogProduct, action: () => void): void {
+    action(); // Выполнить действие с товаром
+    closeModal(); // Закрыть модальное окно
+}
+
+function closeModal(): void {
+    modal.close();
+}
+
+
+// //открытие корзины
+// events.on('basket:open', () => {
+// 	modal.render({
+// 		content: basket.render(),
+// 	});
+// });
+
+// Прослушивание события 'basket:open' и открытие модального окна с содержимым корзины
+events.on('basket:open', () => {
+    modal.render({
+        content: basketComponent.render(), // Возможно, заменить basket на basketComponent
+    });
+});
+
+// Пример инициирования события 'basket:open'
+doOrderButton.addEventListener('click', () => {
+    events.emit('basket:open');
+});
+
+
