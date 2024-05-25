@@ -28,9 +28,11 @@ export class Card extends Component<ICard> {
 	protected _button?: HTMLButtonElement;
 	protected _price: HTMLElement;
 	protected _category: HTMLElement;
+	protected id: string;
 
-	constructor(blockName: string, container: HTMLElement, events: ICardActions) {
+	constructor(blockName: string, container: HTMLElement, events: ICardActions, id: string) {
 		super(container);
+		this.id = id;
 		this._title = ensureElement<HTMLElement>(`.${blockName}__title`, container);
 		this._image = ensureElement<HTMLImageElement>(
 			`.${blockName}__image`, container
@@ -63,14 +65,44 @@ export class Card extends Component<ICard> {
 		this.setText(this._description, value);
 	}
 
+	// set price(value: number) {
+	// 	if (!value) {
+	// 		this.setText(this._price, 'Бесценно');
+	// 		if (this._button) {
+	// 			this._button.setAttribute('disabled', '');
+	// 		}
+	// 	}
+	// }
+
+	// set price(value: number) {
+	// 	if (!value || this.id !== this.id) {
+	// 		this.setText(this._price, 'Бесценно');
+	// 		if (this._button) {
+	// 			this._button.setAttribute('disabled', '');
+	// 		}
+	// 	} else {
+	// 		this.setText(this._price, value.toString());
+	// 		if (this._button) {
+	// 			this._button.removeAttribute('disabled');
+	// 		}
+	// 	}
+	// }
+	
+
 	set price(value: number) {
-		if (!value) {
+		if (!value || this.id !== this.id) {
 			this.setText(this._price, 'Бесценно');
 			if (this._button) {
 				this._button.setAttribute('disabled', '');
 			}
+		} else {
+			this.setText(this._price, `${value} синапсов`);
+			if (this._button) {
+				this._button.removeAttribute('disabled');
+			}
 		}
 	}
+	
 
 	get price(): number {
 		return Number(this._price.textContent);
@@ -84,4 +116,69 @@ export class Card extends Component<ICard> {
 	set button(value: string) {
 		this.setText(this._button, value);
 	}
+}
+
+
+// // старый код 
+// export class CardPreview extends Card {
+//     protected _description: HTMLElement;
+//     protected blockName: string = 'card'; // Добавляем свойство blockName
+
+//     constructor(container: HTMLElement, actions?: ICardActions) {
+//         super('card', container, actions);
+//         this._description = container.querySelector(`.${this.blockName}__text`);
+//     }
+
+//     set description(value: string) {
+//         this.setText(this._description, value);
+//     }
+// }
+
+// export class CardPreview extends Card {
+//     protected _description: HTMLElement;
+//     protected blockName: string = 'card'; // Добавляем свойство blockName
+//     protected id: string; // Добавляем свойство id 
+
+//     constructor(container: HTMLElement, actions?: ICardActions, id: string) {
+//         super('card', container, actions, id);
+//         this._description = container.querySelector(`.${this.blockName}__text`);
+//     }
+
+//     set description(value: string) {
+//         this.setText(this._description, value);
+//     }
+// }
+
+// export class CardPreview extends Card {
+//     protected _description: HTMLElement;
+//     protected blockName: string = 'card'; // Добавляем свойство blockName
+//     protected id: string; // Добавляем свойство id 
+
+//     constructor(container: HTMLElement, id: string, actions: ICardActions, ) {
+//         super('card', container, actions, id);
+//         this._description = container.querySelector(`.${this.blockName}__text`);
+//     }
+
+//     set description(value: string) {
+//         this.setText(this._description, value);
+//     }
+// }
+
+
+// С ОТЛАДКОЙ
+export class CardPreview extends Card {
+    protected _description: HTMLElement;
+    protected blockName: string = 'card';
+    protected id: string;
+
+    constructor(container: HTMLElement, id: string, actions: ICardActions) {
+        super('card', container, actions, id);
+        console.log('CardPreview constructor called');
+        this._description = container.querySelector(`.${this.blockName}__text`);
+    }
+
+    set description(value: string) {
+        console.log('Setting CardPreview description:', value);
+        this.setText(this._description, value);
+    }
 }

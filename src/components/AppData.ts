@@ -18,6 +18,7 @@ export class CatalogProduct extends Model<IProductItem> {
 	description: string;
 	image: string;
 	price: number | null;
+	selected: boolean; // добавлено для теста
 }
 
 export type CatalogProductChange = {
@@ -42,6 +43,10 @@ export class AppStateModel extends Model<IAppState> {
 		email: '',
 		phone: '',
 	};
+
+	getCountProductInBasket() {
+        return this.basket.length;
+    }
 
 	addInBasket(id: string): void {
 		this.basket.push(id);
@@ -199,11 +204,12 @@ class OrderManager {
 
 const orderManager = new OrderManager();
 
-// Пример использования методов
-orderManager.checkPayment('онлайн');
-orderManager.checkAddress('адрес доставки');
-orderManager.checkEmail('email@example.com');
-orderManager.checkPhone('+1234567890');
+
+// // Пример использования методов
+// orderManager.checkPayment('онлайн');
+// orderManager.checkAddress('адрес доставки');
+// orderManager.checkEmail('email@example.com');
+// orderManager.checkPhone('+1234567890');
 
 // import { IProductItem, IOrder } from "../types";
 // import { IEvents, EventEmitter } from "./base/events";

@@ -4,9 +4,11 @@ export interface IProductItem {
 	title: string;
 	description: string;
 	image: string;
-	price: number | null;
+	// price: number | null;
+	price: number;
 	// error?: string;
 }
+
 
 export enum CardCategory {
 	SoftSkill = 'софт-скил',
@@ -78,6 +80,7 @@ export interface IBasketItem {
 	price: number;
 	error?: string;
 }
+
 
 export interface IOrderAdress {
 	// Этап выбора способа оплаты и доставки
