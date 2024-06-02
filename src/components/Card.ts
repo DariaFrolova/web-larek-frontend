@@ -167,6 +167,7 @@ export class Card extends Component<ICard> {
 
 // С ОТЛАДКОЙ
 export class CardPreview extends Card {
+    [x: string]: any;
     protected _description: HTMLElement;
     protected blockName: string = 'card';
     protected id: string;

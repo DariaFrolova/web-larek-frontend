@@ -6,14 +6,6 @@ interface IModalData {
     content: HTMLElement;
 }
 
-// interface IModalData {
-//     content: HTMLElement;
-//     settings?: {
-//         selected: boolean;
-//     };
-// }
-
-
 export class Modal extends Component<IModalData> {
     private _closeButton: HTMLButtonElement;
     private _content: HTMLElement;
@@ -63,14 +55,5 @@ export class Modal extends Component<IModalData> {
         this.open();
         return this.container;
     }
-
-    // render(data: IModalData): HTMLElement {
-
-    //     console.log('render from modal ts вызван');
-    
-    //     super.render(data);
-    //     this.open();
-    //     return this.container;
-    // }
 
 }

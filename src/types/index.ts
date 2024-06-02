@@ -4,11 +4,13 @@ export interface IProductItem {
 	title: string;
 	description: string;
 	image: string;
-	// price: number | null;
 	price: number;
-	// error?: string;
 }
 
+// export interface ISuccess {
+// 	totalAmount: number;
+// 	selectPaymentMethod: PaymentMethod;
+// }
 
 export enum CardCategory {
 	SoftSkill = 'софт-скил',
@@ -55,18 +57,18 @@ export interface IOrderSuccess {
 	totalAmount: number;
 }
 
+export type PaymentMethod = 'cash' | 'card';
+
 export interface IOrder {
-	// id: string;
-	items: string[];
-	selectPaymentMethod: PaymentMethod;
-	shippingAddress: string;
+    // paymentMethod: any;
+	// selectPaymentMethod: PaymentMethod | null;
+	payment: PaymentMethod | null;
 	email: string;
 	phone: string;
+	shippingAddress: string;
 	totalAmount: number;
+	items: string[];
 }
-
-export type PaymentMethod = 'онлайн' | 'при получении'; // способы оплаты
-// export type shippingAddress = string; лишнее - не нужно, можно только если вдруг будет в интерфейсе список адресов, например: export type shippingAddressOptions = 'адрес1' | 'адрес2' | 'адрес3';
 
 export interface IAppState {
 	catalog: IProductItem[];
@@ -81,117 +83,24 @@ export interface IBasketItem {
 	error?: string;
 }
 
-
-export interface IOrderAdress {
-	// Этап выбора способа оплаты и доставки
-	selectPaymentMethod: PaymentMethod;
+export interface IOrderAddress {
 	shippingAddress: string;
-	error?: string;
+	payment: PaymentMethod;
 }
 
 export interface IOrderPersonalData {
-	// Этап ввода персональных данных
 	email: string;
 	phone: string;
-	error?: string;
+	payment: PaymentMethod | null;
 }
-
 
 export interface FormErrors {
-    email?: string;
-    phone?: string;
-    selectPaymentMethod?: string;
-    shippingAddress?: string;
+	// paymentMethod: string;
+	email?: string;
+	phone?: string;
+	payment?: string;
+	shippingAddress?: string;
 }
 
-
 // Тип для обобщенной структуры ошибок в форме
-type FormErrorsType = Partial<Record<keyof FormErrors, string>>;
-
-// Для расширения
-
-//   // Тип компонента страницы
-// type PageData = {
-// 	counter: number;
-// 	catalog: HTMLElement[];
-// 	locked: boolean;
-//   }
-
-//   // Тип компонента формы
-//   type FormData = {
-// 	valid: boolean;
-// 	errors: string[];
-//   }
-
-//   // Тип компонента модального окна
-//   type ModalData = {
-// 	content: HTMLElement;
-//   }
-
-//   // Тип компонента успешного оформления заказа
-//   type SuccessData = {
-// 	totalAmount: number;
-//   }
-
-//   // Тип компонента успешного оформления заказа с действиями
-//   type SuccessProps = {
-// 	data: SuccessData;
-// 	onClick: () => void;
-//   }
-
-// Интерфейс для работы с данными, полученными с сервера
-// export interface IDataApi {
-// 	getProductItem: (id: string) => Promise<IProductItem>;
-// 	getProductList: () => Promise<IProductItem[]>;
-// 	getOrderItems(order: IOrder): Promise<IOrderSuccess>;
-// }
-
-// Карточка
-// export interface IProductItem {
-// 	// это карточка товара со всей информацией
-// 	id: string;
-// 	description: string;
-// 	image: string;
-// 	title: string;
-// 	category: string;
-// 	price: number;
-// 	error?: string;
-// }
-
-// export interface IProductItem {
-// 	id: string;
-// 	description: string;
-// 	price: number | null;
-// 	title: string;
-// 	image: string;
-// 	category: CardCategory;
-// 	error?: string;
-// 	button: string;
-// }
-
-// export interface IOrder {
-// 	// все, что содержит заказ
-// 	id: string;
-// 	userId: string;
-// 	// orderId: string; // не требуется по заданию
-// 	// quantity: number; //этого нет в интерфейсе
-// 	totalAmount: number;
-// 	selectPaymentMethod: PaymentMethod;
-// 	shippingAddress: string;
-// 	email: string;
-// 	phone: string;
-// }
-
-// export interface IOrderSuccess extends IOrder {
-// 	// Этап "ваш заказ оформлен"
-// 	totalAmount: number;
-// }
-
-
-//Ошибки в формах
-// Интерфейс для объекта ошибок в форме
-// export  interface FormErrors {
-// 	email: string;
-// 	phone: string;
-// 	// можно добавить другие поля, если нужно
-// }
+export type FormErrorsType = Partial<Record<keyof FormErrors, string>>;
