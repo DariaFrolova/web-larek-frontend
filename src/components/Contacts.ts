@@ -1,203 +1,80 @@
-import { IOrderAddress, IOrderPersonalData, PaymentMethod } from "../types";
-import { IEvents } from "./base/events";
-import { Form, FormState } from "./common/Form";
+// import { IOrderAddress, IOrderPersonalData, PaymentMethod } from "../types";
+import { IOrderPersonalData } from '../types';
+import { IEvents } from './base/events';
+import { Form, FormState } from './common/Form';
 
 export class ContactsOrder extends Form<IOrderPersonalData> {
-    private form: HTMLFormElement;
-    // selectPaymentMethod: boolean;
-    selectPaymentMethod: PaymentMethod | null;
-    // shippingAddress: boolean;
-    shippingAddress: string;
-    
-    constructor(container: HTMLFormElement, events: IEvents) {
-        super(container, events);
-        this.form = container;
-        this.registerEvents();
-    }
+	protected _email: string = '';
+	protected _phone: string = '';
+	constructor(container: HTMLFormElement, events: IEvents) {
+		super(container, events);
 
-    set phone(value: string) {
-        (this.form.elements.namedItem('phone') as HTMLInputElement).value = value;
-    }
+		const phoneInput = this.container.querySelector(
+			'input[name="phone"]'
+		) as HTMLInputElement;
+		const emailInput = this.container.querySelector(
+			'input[name="email"]'
+		) as HTMLInputElement;
 
-    set email(value: string) {
-        (this.form.elements.namedItem('email') as HTMLInputElement).value = value;
-    }
+		phoneInput.addEventListener('input', () => {
+			this._phone = phoneInput.value.trim();
+			this.checkSubmitButtonState();
+		});
 
-    open() {
-        this.form.classList.add('active');
-    }
+		emailInput.addEventListener('input', () => {
+			this._email = emailInput.value.trim();
+			this.checkSubmitButtonState();
+		});
 
-    close() {
-        this.form.classList.remove('active');
-    }
+		const submitButton = this.container.querySelector(
+			'button[type="submit"]'
+		) as HTMLButtonElement;
+		submitButton.addEventListener('click', () => {
+			events.emit('payment:submit');
+		});
+	}
 
-    // render(state: Partial<IOrderPersonalData> & FormState & { selectPaymentMethod: PaymentMethodData | string; shippingAddress: string }): HTMLElement {
-    //     return super.render(state);
-    // }
+	checkSubmitButtonState() {
+		const phoneInput = this.container.querySelector(
+			'input[name="phone"]'
+		) as HTMLInputElement;
+		const emailInput = this.container.querySelector(
+			'input[name="email"]'
+		) as HTMLInputElement;
+		const submitButton = this.container.querySelector(
+			'button[type="submit"]'
+		) as HTMLButtonElement;
+		const phonePattern =
+			/^\+?\d{1,3}?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}$/;
+		const isPhoneValid = phonePattern.test(phoneInput.value.trim());
 
-    render(state: Partial<IOrderPersonalData> & FormState & { selectPaymentMethod: PaymentMethodData | string; shippingAddress: string }): HTMLFormElement {
-        return super.render(state);
-    }
-    
+		const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		const isEmailValid = emailPattern.test(emailInput.value.trim());
+		const formErrors = this.container.querySelector('.form__errors');
 
-    private registerEvents() {
-        const phoneInput = this.form.elements.namedItem('phone') as HTMLInputElement;
-        const emailInput = this.form.elements.namedItem('email') as HTMLInputElement;
+		if (isPhoneValid && isEmailValid) {
+			formErrors.textContent = '';
+			submitButton.disabled = false;
+		} else {
+			formErrors.textContent = 'Введите почту и номер телефона';
+			submitButton.disabled = true;
+		}
+	}
 
-        phoneInput.addEventListener('input', () => {
-            this.events.emit('contacts.phone:change', { value: phoneInput.value });
-        });
+	set phone(value: string) {
+		(this.container.elements.namedItem('phone') as HTMLInputElement).value =
+			value;
+	}
 
-        emailInput.addEventListener('input', () => {
-            this.events.emit('contacts.email:change', { value: emailInput.value });
-        });
-    }
+	set email(value: string) {
+		(this.container.elements.namedItem('email') as HTMLInputElement).value =
+			value;
+	}
+
+	getEmail(): string {
+		return this._email;
+	}
+	getPhone(): string {
+		return this._phone;
+	}
 }
-
-
-// import { IOrderAddress, IOrderPersonalData } from "../types";
-// import { IEvents } from "./base/events";
-// import { Form, FormState } from "./common/Form";
-
-
-// export class ContactsOrder extends Form<IOrderPersonalData> {
-//     // static render: any;
-//     // [x: string]: any;
-//     private form: HTMLFormElement;
-    
-//     constructor(container: HTMLFormElement, events: IEvents) {
-//         super(container, events);
-//         this.form = container;
-//     }
-
-//     set phone(value: string) {
-//         (this.form.elements.namedItem('phone') as HTMLInputElement).value = value;
-//     }
-
-//     set email(value: string) {
-//         (this.form.elements.namedItem('email') as HTMLInputElement).value = value;
-//     }
-
-//     open() {
-//         this.form.classList.add('active');
-//     }
-
-//     close() {
-//         this.form.classList.remove('active');
-//     }
-
-//     // render(state: Partial<IOrderPersonalData> & FormState & IOrderAddress): HTMLElement {
-//     //     return super.render(state);
-//     // }
-
-//     render(state: Partial<IOrderPersonalData> & FormState & { selectPaymentMethod: PaymentMethodData | string; shippingAddress: string }): HTMLElement {
-//         return super.render(state);
-//     }
-
-//     // render(state: Partial<IOrderPersonalData> & FormState): HTMLElement {
-//     //     return super.render(state);
-//     //   }
-//     // render(state: Partial<IOrderPersonalData> & FormState & IOrderAddress): HTMLElement {
-//     //     // Добавляем метод render в класс ContactsOrder
-//     //     const element = document.createElement('div');
-//     //     element.innerText = JSON.stringify(state);
-//     //     return element;
-//     // }
-// }
-
-
-
-
-
-//старье
-
-
-// export class ContactsOrder extends Form<IOrderPersonalData> {
-//     private form: HTMLFormElement;
-    
-//     constructor(container: HTMLFormElement, events: IEvents) {
-//         super(container, events);
-//         this.form = container;
-//     }
-
-//     set phone(value: string) {
-//         (this.form.elements.namedItem('phone') as HTMLInputElement).value = value;
-//     }
-
-//     set email(value: string) {
-//         (this.form.elements.namedItem('email') as HTMLInputElement).value = value;
-//     }
-
-//     open() {
-//         this.form.classList.add('active');
-//     }
-
-//     close() {
-//         this.form.classList.remove('active');
-//     }
-
-//     render(state: Partial<IOrderPersonalData> & FormState & IOrderAdress): HTMLElement {
-//         return super.render(state);
-//     }
-// }
-
-
-
-// export class ContactsOrder extends Form<IOrderPersonalData> {
-//     private form: HTMLFormElement;
-//     static render: any;
-    
-//     constructor(container: HTMLFormElement, events: IEvents) {
-//         super(container, events);
-//         this.form = container;
-//     }
-
-//     set phone(value: string) {
-//         (this.form.elements.namedItem('phone') as HTMLInputElement).value = value;
-//     }
-
-//     set email(value: string) {
-//         (this.form.elements.namedItem('email') as HTMLInputElement).value = value;
-//     }
-
-//     open() {
-//         this.form.classList.add('active');
-//     }
-
-//     close() {
-//         this.form.classList.remove('active');
-//     }
-
-//     render(state: Partial<IOrderPersonalData> & FormState & IOrderAdress): HTMLElement {
-//         return super.render(state);
-//     }
-//         // Handle errors if needed
-//         // You can remove return or handle errors as needed
-//     }
-
-
-
-
-
-// import { Form } from "./common/Form";
-// import { IOrderPersonalData } from "../types";
-// import { IEvents } from "./base/events";
-
-// export class ContactsOrder extends Form<IOrderPersonalData> {
-//     private form: HTMLFormElement; // добавляем это свойство
-//     static render: any;
-//     constructor(container: HTMLFormElement, events: IEvents) {
-//         super(container, events);
-//         this.form = container; // инициализируем его здесь
-//     }
-
-//     set phone(value: string) {
-//         (this.form.elements.namedItem('phone') as HTMLInputElement).value = value;
-//     }
-
-//     set email(value: string) {
-//         (this.form.elements.namedItem('email') as HTMLInputElement).value = value;
-//     }
-    
-// }
-

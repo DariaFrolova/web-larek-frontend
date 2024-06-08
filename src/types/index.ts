@@ -1,17 +1,14 @@
+//карточка товара
 export interface IProductItem {
 	id: string;
-	category: CardCategory;
+	category?: CardCategory;
 	title: string;
 	description: string;
 	image: string;
 	price: number;
 }
 
-// export interface ISuccess {
-// 	totalAmount: number;
-// 	selectPaymentMethod: PaymentMethod;
-// }
-
+// категории товаров
 export enum CardCategory {
 	SoftSkill = 'софт-скил',
 	Other = 'другое',
@@ -20,54 +17,15 @@ export enum CardCategory {
 	Button = 'кнопка',
 }
 
-export interface ICardActions {
-	onClick: (event: MouseEvent) => void;
-}
-
-export interface ICardList {
-	total: number;
-	items: IProductItem[];
-}
-
-// это то, что показано из карточки в каталоге
-export interface IProductCatalog {
-	id: string;
-	category: string;
-	title: string;
-	image: string;
-	price: number;
-}
-
-// это то, что показано из карточки в корзине
-export interface IProductBasket {
-	id: string;
-	title: string;
-	price: number;
-	error?: string;
-}
-
-// корзина
-export interface IBasket {
-	items: IProductBasket[];
-	sum: number | null;
-}
-
-export interface IOrderSuccess {
-	id: string;
-	totalAmount: number;
-}
-
+// способы оплаты
 export type PaymentMethod = 'cash' | 'card';
-
 export interface IOrder {
-    // paymentMethod: any;
-	// selectPaymentMethod: PaymentMethod | null;
-	payment: PaymentMethod | null;
+	items: string[];
+	address: string;
+	payment: PaymentMethod;
 	email: string;
 	phone: string;
-	shippingAddress: string;
-	totalAmount: number;
-	items: string[];
+	total: number;
 }
 
 export interface IAppState {
@@ -76,15 +34,22 @@ export interface IAppState {
 	order: IOrder | null;
 }
 
+export interface IOrderSuccess {
+	id: string;
+	total: number;
+}
+
+// список товаров в корзине
 export interface IBasketItem {
-	// список товаров в корзине
+	quantity: number;
 	title: string;
 	price: number;
-	error?: string;
+	// error?: string;
 }
 
 export interface IOrderAddress {
-	shippingAddress: string;
+	// shippingAddress: string;
+	address: string;
 	payment: PaymentMethod;
 }
 
@@ -92,15 +57,19 @@ export interface IOrderPersonalData {
 	email: string;
 	phone: string;
 	payment: PaymentMethod | null;
+	address: string;
 }
 
 export interface FormErrors {
-	// paymentMethod: string;
-	email?: string;
-	phone?: string;
-	payment?: string;
-	shippingAddress?: string;
+	email: string;
+	phone: string;
+	payment: PaymentMethod;
+	address: string;
 }
 
 // Тип для обобщенной структуры ошибок в форме
 export type FormErrorsType = Partial<Record<keyof FormErrors, string>>;
+
+export interface ICardActions {
+	onClick: (event: MouseEvent) => void;
+}

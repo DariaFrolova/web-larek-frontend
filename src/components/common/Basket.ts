@@ -53,21 +53,17 @@ export class Basket extends Component<IBasketView> {
 	}
 
 	addItemToBasket(item: CatalogProduct) {
-		console.log('addItemToBasket вызван'); // Вывод в консоль при вызове метода addItemToBasket
-
-		this.itemsInBasket.push(item); // Добавляем товар в массив корзины
-		console.log(this.itemsInBasket); // Проверка, что товар добавлен в корзину
+		console.log('addItemToBasket вызван');
+		this.itemsInBasket.push(item);
+		console.log(this.itemsInBasket);
 		this.renderBasketItems();
 		this.updateTotal();
 		localStorage.setItem('basketItems', JSON.stringify(this.itemsInBasket));
 		this.updateCounter();
 	}
 
-
-
 	removeItemFromBasket(item: CatalogProduct) {
-		console.log('removeItemFromBasket вызван');
-		console.log('РАБОТАЕТ Removing item from basket:', item.id);
+		console.log('Товар удален из корзины:', item.id);
 
 		this.itemsInBasket = this.itemsInBasket.filter((i) => i.id !== item.id);
 		this.renderBasketItems();
@@ -75,8 +71,9 @@ export class Basket extends Component<IBasketView> {
 		localStorage.setItem('basketItems', JSON.stringify(this.itemsInBasket));
 		this.updateCounter();
 
-		// Генерируем событие об удалении товара из корзины
 		this.events.emit('basketItemRemoved', { itemId: item.id });
+
+		this.getItemsInBasket();
 	}
 
 	updateTotal() {
@@ -84,13 +81,12 @@ export class Basket extends Component<IBasketView> {
 
 		let total = 0;
 
-		// Проходим по всем товарам в корзине и суммируем их цены
 		this.itemsInBasket.forEach((item) => {
 			total += item.price;
 		});
 
 		this.getItemsInBasket();
-		// Устанавливаем общую цену в элемент интерфейса с добавлением слова "синапсов"
+
 		this.setText(this._total, `${total} синапсов`);
 		return total;
 	}
@@ -123,7 +119,7 @@ export class Basket extends Component<IBasketView> {
 		console.log('getItemsInBasket вызван');
 
 		if (this.itemsInBasket.length === 0) {
-			this._list.innerHTML = '<p>Корзина пуста</p>';
+			this._list.innerHTML = '<p>В корзине ничего нет :(</p>';
 			this.setDisabled(this._orderButton, true);
 		} else {
 			this.setDisabled(this._orderButton, false);
@@ -140,21 +136,15 @@ export class Basket extends Component<IBasketView> {
 
 	clearBasket() {
 		console.log('clearBasket вызван');
-
-		// Очистка массива товаров в корзине
 		this.itemsInBasket = [];
-		// Обновление отображения корзины
 		this.renderBasketItems();
-		// Обновление общей суммы
 		this.updateTotal();
-		// Очистка localstorage
 		localStorage.removeItem('basketItems');
-		// Обновление счетчика
 		this.updateCounter();
 	}
 
 	// Метод для обновления счетчика
-	private updateCounter() {
+	updateCounter() {
 		console.log('updateCounter вызван');
 
 		this._counter.textContent = this.itemsInBasket.length.toString();
