@@ -1,6 +1,5 @@
 import { ApiListResponse, Api } from './base/api';
 import { IProductItem, IOrder, IOrderSuccess } from '../types';
-// import { ContactsOrder } from './Contacts';
 
 export interface IDataApi {
 	getProductList: () => Promise<IProductItem[]>;

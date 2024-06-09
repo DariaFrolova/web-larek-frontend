@@ -5,10 +5,8 @@ import {
 	IProductItem,
 	IAppState,
 	IOrder,
-	FormErrors,
 	FormErrorsType,
 	PaymentMethod,
-	// IOrderAddress,
 	IOrderPersonalData,
 	CardCategory,
 } from '../types';

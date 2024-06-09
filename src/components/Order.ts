@@ -1,9 +1,6 @@
 import { Form } from "./common/Form";
 import { IOrderAddress } from "../types";
 import { IEvents } from "./base/events";
-// import { EventEmitter, IEvents } from "./base/events";
-// import { ensureElement } from "../utils/utils";
-// import { PaymentMethod } from "../types";
 
 
 export class OrderAddress extends Form<IOrderAddress> {
