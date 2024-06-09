@@ -32,7 +32,7 @@ export class Modal extends Component<IModalData> {
     }
 
     open() {
-        console.log('open from modal ts вызван');
+        // console.log('open from modal ts вызван'); для отладки
         
         this.container.classList.add('modal_active');
         this.events.emit('modal:open');
@@ -40,7 +40,7 @@ export class Modal extends Component<IModalData> {
 
     close() {
 
-        console.log('close from modal ts вызван');
+        // console.log('close from modal ts вызван'); для отладки
 
         this.container.classList.remove('modal_active');
         this.content = null;
@@ -49,7 +49,7 @@ export class Modal extends Component<IModalData> {
 
     render(data: IModalData): HTMLElement {
 
-        console.log('render from modal ts вызван');
+        // console.log('render from modal ts вызван'); для отладки
 
         super.render(data);
         this.open();

@@ -53,9 +53,9 @@ export class Basket extends Component<IBasketView> {
 	}
 
 	addItemToBasket(item: CatalogProduct) {
-		console.log('addItemToBasket вызван');
+		// console.log('addItemToBasket вызван'); для отладки
 		this.itemsInBasket.push(item);
-		console.log(this.itemsInBasket);
+		// console.log(this.itemsInBasket); для отладки
 		this.renderBasketItems();
 		this.updateTotal();
 		localStorage.setItem('basketItems', JSON.stringify(this.itemsInBasket));
@@ -63,7 +63,7 @@ export class Basket extends Component<IBasketView> {
 	}
 
 	removeItemFromBasket(item: CatalogProduct) {
-		console.log('Товар удален из корзины:', item.id);
+		// console.log('Товар удален из корзины:', item.id); для отладки
 
 		this.itemsInBasket = this.itemsInBasket.filter((i) => i.id !== item.id);
 		this.renderBasketItems();
@@ -77,7 +77,7 @@ export class Basket extends Component<IBasketView> {
 	}
 
 	updateTotal() {
-		console.log('updateTotal вызван');
+		// console.log('updateTotal вызван'); для отладки
 
 		let total = 0;
 
@@ -92,7 +92,7 @@ export class Basket extends Component<IBasketView> {
 	}
 
 	renderBasketItems() {
-		console.log('renderBasketItems вызван');
+		// console.log('renderBasketItems вызван'); для отладки
 
 		let counter = 1;
 		this._list.innerHTML = '';
@@ -116,7 +116,7 @@ export class Basket extends Component<IBasketView> {
 		});
 	}
 	getItemsInBasket(): CatalogProduct[] {
-		console.log('getItemsInBasket вызван');
+		// console.log('getItemsInBasket вызван'); для отладки
 
 		if (this.itemsInBasket.length === 0) {
 			this._list.innerHTML = '<p>В корзине ничего нет :(</p>';
@@ -129,7 +129,7 @@ export class Basket extends Component<IBasketView> {
 	}
 
 	getItemId() {
-		console.log('getItemId вызван');
+		// console.log('getItemId вызван'); для отладки
 
 		return this.itemsInBasket.map((item) => item.id);
 	}
@@ -145,7 +145,7 @@ export class Basket extends Component<IBasketView> {
 
 	// Метод для обновления счетчика
 	updateCounter() {
-		console.log('updateCounter вызван');
+		// console.log('updateCounter вызван'); для отладки
 
 		this._counter.textContent = this.itemsInBasket.length.toString();
 	}

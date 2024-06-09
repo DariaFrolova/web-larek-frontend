@@ -106,12 +106,12 @@ export class CardPreview extends Card {
 
 	constructor(container: HTMLElement, id: string, actions: ICardActions) {
 		super('card', container, actions, id);
-		console.log('вызов конструктора CardPreview');
+		// console.log('вызов конструктора CardPreview');
 		this._description = container.querySelector(`.${this.blockName}__text`);
 	}
 
 	set description(value: string) {
-		console.log('Установлено описание', value);
+		// console.log('Установлено описание', value);
 		this.setText(this._description, value);
 	}
 }

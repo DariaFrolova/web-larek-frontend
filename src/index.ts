@@ -97,25 +97,25 @@ events.on('item:updated', (item: CatalogProduct) => {
 
 // открытие карточки превью - это ОК
 events.on('preview:changed', (item: CatalogProduct) => {
-	console.log('Событие "preview:changed" вызвано с элементом:', item);
+	// console.log('Событие "preview:changed" вызвано с элементом:', item);
 
 	if (item) {
-		console.log('Создание экземпляра CardPreview');
+		// console.log('Создание экземпляра CardPreview');
 		const cardPreviewContainer = cloneTemplate(cardPreviewTemplate);
 		const cardPreview = new CardPreview(cardPreviewContainer, item.id, {
 			onClick: () => {
-				console.log('onClick на CardPreview');
+				// console.log('onClick на CardPreview');
 				if (appData.checkBasket(item)) {
-					console.log('Генерация события "webproduct:delete"');
+					// console.log('Генерация события "webproduct:delete"');
 					events.emit('webproduct:delete', item);
 				} else {
-					console.log('Генерация события "webproduct:added"');
+					// console.log('Генерация события "webproduct:added"');
 					events.emit('webproduct:added', item);
 				}
 			},
 		});
 
-		console.log('рендеринг модального окна с содержимым CardPreview');
+		// console.log('рендеринг модального окна с содержимым CardPreview');
 		modal.render({
 			content: cardPreview.render({
 				title: item.title,
@@ -155,7 +155,7 @@ events.on('webproduct:delete', (item: CatalogProduct) => {
 // считает количество товаров в корзине
 appData.loadBasketFromLocalStorage(() => {
 	page.counter = appData.getCountProductInBasket();
-	console.log('количество товара изменилось');
+	// console.log('количество товара изменилось');
 });
 
 // Уведомление о том, что корзина изменилась
@@ -182,12 +182,12 @@ events.on('order:open', () => {
 			errors: [''],
 		}),
 	});
-	console.log('Форма заказа открыта');
+	// console.log('Форма заказа открыта');
 });
 
 // выбрать оплату
 events.on('payment:changed', (data: { target: PaymentMethod }) => {
-	console.log('Изменен метод оплаты на:', data.target);
+	// console.log('Изменен метод оплаты на:', data.target);
 	appData.checkPayment(data.target);
 });
 
@@ -202,7 +202,7 @@ events.on('order:submit', () => {
 			payment: null,
 		}),
 	});
-	console.log('Форма контактов открыта');
+	// console.log('Форма контактов открыта');
 });
 
 // Обработка изменения данных платежа или адреса доставки в заказе
